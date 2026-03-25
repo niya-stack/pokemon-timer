@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ポケカタイマー">
+  <title>ポケカタイマー</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: #0f0e17;
+      color: #fffffe;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: background 0.6s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body.warning { background: #c87d11; }
+    body.alert   { background: #b83218; }
+    body.danger  { background: #7a0000; }
+
+    .container {
+      width: 100%;
+      max-width: 380px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Mode selector */
+    .mode-selector {
+      display: flex;
+      background: rgba(255,255,255,0.07);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 3.5rem;
+    }
+
+    .mode-btn {
+      padding: 0.55rem 2.2rem;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+
+    .mode-btn.active {
+      background: #fffffe;
+      color: #0f0e17;
+    }
+
+    .mode-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    /* Timer */
+    .timer {
+      font-size: 7.5rem;
+      font-weight: 100;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .timer.running {
+      animation: breathe 2s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.8; }
+    }
+
+    .status-label {
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      opacity: 0.65;
+      height: 1.5em;
+      margin-bottom: 3.2rem;
+      text-align: center;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-main {
+      padding: 1rem 2.8rem;
+      border: none;
+      border-radius: 999px;
+      background: #fffffe;
+      color: #0f0e17;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 152px;
+      transition: transform 0.1s;
+    }
+
+    .btn-main:active { transform: scale(0.95); }
+
+    .btn-sub {
+      width: 52px;
+      height: 52px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      background: transparent;
+      color: rgba(255,255,255,0.65);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s, border-color 0.15s;
+    }
+
+    .btn-sub:active {
+      transform: scale(0.92);
+      border-color: rgba(255,255,255,0.55);
+    }
+
+    /* End overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.4rem;
+      padding: 2.5rem;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .overlay.show { display: flex; }
+
+    .overlay-icon { font-size: 3.5rem; }
+
+    .overlay-title {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    .overlay-message {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.6;
+      max-width: 290px;
+    }
+
+    .btn-overlay {
+      margin-top: 0.5rem;
+      padding: 0.9rem 3rem;
+      border: none;
+      border-radius: 999px;
+      background: #fffffe;
+      color: #0f0e17;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .btn-overlay:active { transform: scale(0.95); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">ポケカタイマー</div>
+
+    <div class="mode-selector">
+      <button class="mode-btn active" id="modeBO1" onclick="setMode('BO1')">BO1</button>
+      <button class="mode-btn"        id="modeBO3" onclick="setMode('BO3')">BO3</button>
+    </div>
+
+    <div class="timer" id="timer">25:00</div>
+    <div class="status-label" id="statusLabel">&nbsp;</div>
+
+    <div class="controls">
+      <button class="btn-sub" id="btnReset" onclick="resetTimer()" title="リセット">↺</button>
+      <button class="btn-main" id="btnStart" onclick="toggleTimer()">スタート</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-icon">⏰</div>
+    <div class="overlay-title">時間終了</div>
+    <div class="overlay-message" id="overlayMsg"></div>
+    <button class="btn-overlay" onclick="closeOverlay()">リセット</button>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>

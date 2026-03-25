@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Background -->
+  <rect width="192" height="192" rx="42" fill="#0f0e17"/>
+  <!-- Clock ring (track) -->
+  <circle cx="96" cy="100" r="60" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.12"/>
+  <!-- Clock ring (progress) -->
+  <circle cx="96" cy="100" r="60" fill="none" stroke="#e94560" stroke-width="5"
+          stroke-dasharray="188 377" stroke-linecap="round"
+          transform="rotate(-90 96 100)"/>
+  <!-- Hour markers -->
+  <circle cx="96"  cy="44"  r="3" fill="#ffffff" opacity="0.35"/>
+  <circle cx="96"  cy="156" r="3" fill="#ffffff" opacity="0.35"/>
+  <circle cx="40"  cy="100" r="3" fill="#ffffff" opacity="0.35"/>
+  <circle cx="152" cy="100" r="3" fill="#ffffff" opacity="0.35"/>
+  <!-- Minute hand -->
+  <line x1="96" y1="100" x2="96" y2="52" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <!-- Hour hand -->
+  <line x1="96" y1="100" x2="127" y2="118" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <!-- Second hand -->
+  <line x1="96" y1="100" x2="130" y2="85" stroke="#e94560" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Center dot -->
+  <circle cx="96" cy="100" r="5.5" fill="#ffffff"/>
+  <!-- Crown -->
+  <rect x="82" y="22" width="28" height="9" rx="4.5" fill="#ffffff" opacity="0.5"/>
+</svg>
