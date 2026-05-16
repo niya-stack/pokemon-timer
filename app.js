@@ -165,5 +165,10 @@ document.addEventListener('visibilitychange', () => {
   if (running && document.visibilityState === 'visible') acquireWakeLock();
 });
 
+// --- Orientation ---
+function toggleOrientation() {
+  document.body.classList.toggle('rotated');
+}
+
 // --- Init ---
 render();
