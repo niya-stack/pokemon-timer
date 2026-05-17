@@ -201,6 +201,47 @@
     }
 
     .btn-overlay:active { transform: scale(0.95); }
+
+    /* Landscape / short viewport: compact the vertical stack so the
+       start button is never clipped by body's overflow:hidden */
+    @media (orientation: landscape) and (max-height: 600px) {
+      .container     { padding: 1rem 1.5rem; }
+      .title         { margin-bottom: 0.6rem; }
+      .mode-selector { margin-bottom: 1rem; }
+      .mode-btn      { padding: 0.4rem 1.6rem; }
+      .timer         { font-size: 3.8rem; margin-bottom: 0.3rem; }
+      .status-label  { margin-bottom: 1rem; }
+      .btn-main      { padding: 0.7rem 2.4rem; }
+      .btn-sub       { width: 44px; height: 44px; }
+    }
+
+    /* Tap-to-rotate: device stays portrait, the whole UI is rotated 90deg
+       so it works even with the OS auto-rotate disabled (incl. iOS) */
+    body.rotated .container,
+    body.rotated .overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      inset: auto;
+      width: 100dvh;          /* swap dimensions: width = viewport height */
+      height: 100vw;          /* height = viewport width */
+      max-width: none;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+
+    body.rotated .container {
+      padding: 1rem 1.5rem;
+      justify-content: center;
+    }
+
+    body.rotated .title         { margin-bottom: 0.6rem; }
+    body.rotated .mode-selector { margin-bottom: 1rem; }
+    body.rotated .mode-btn      { padding: 0.4rem 1.6rem; }
+    body.rotated .timer         { font-size: 3.8rem; margin-bottom: 0.3rem; }
+    body.rotated .status-label  { margin-bottom: 1rem; }
+    body.rotated .btn-main      { padding: 0.7rem 2.4rem; }
+    body.rotated .btn-sub       { width: 44px; height: 44px; }
   </style>
 </head>
 <body>
@@ -218,6 +259,7 @@
     <div class="controls">
       <button class="btn-sub" id="btnReset" onclick="resetTimer()" title="リセット">↺</button>
       <button class="btn-main" id="btnStart" onclick="toggleTimer()">スタート</button>
+      <button class="btn-sub" id="btnRotate" onclick="toggleOrientation()" title="画面回転">⟳</button>
     </div>
   </div>
 
