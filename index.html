@@ -154,6 +154,23 @@
       border-color: rgba(255,255,255,0.55);
     }
 
+    .btn-reset {
+      padding: 0.6rem 1.3rem;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.15s;
+    }
+
+    .btn-reset:active {
+      transform: scale(0.95);
+      border-color: rgba(255,255,255,0.55);
+    }
+
     /* End overlay */
     .overlay {
       display: none;
@@ -213,6 +230,7 @@
       .status-label  { margin-bottom: 1rem; }
       .btn-main      { padding: 0.7rem 2.4rem; }
       .btn-sub       { width: 44px; height: 44px; }
+      .btn-reset     { padding: 0.45rem 1rem; font-size: 0.8rem; }
     }
 
     /* Tap-to-rotate: device stays portrait, the whole UI is rotated 90deg
@@ -220,9 +238,9 @@
     body.rotated .container,
     body.rotated .overlay {
       position: fixed;
+      inset: auto;
       top: 50%;
       left: 50%;
-      inset: auto;
       width: 100dvh;          /* swap dimensions: width = viewport height */
       height: 100vw;          /* height = viewport width */
       max-width: none;
@@ -242,6 +260,7 @@
     body.rotated .status-label  { margin-bottom: 1rem; }
     body.rotated .btn-main      { padding: 0.7rem 2.4rem; }
     body.rotated .btn-sub       { width: 44px; height: 44px; }
+    body.rotated .btn-reset     { padding: 0.45rem 1rem; font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -257,7 +276,7 @@
     <div class="status-label" id="statusLabel">&nbsp;</div>
 
     <div class="controls">
-      <button class="btn-sub" id="btnReset" onclick="resetTimer()" title="リセット">↺</button>
+      <button class="btn-reset" id="btnReset" onclick="resetTimer()">リセット</button>
       <button class="btn-main" id="btnStart" onclick="toggleTimer()">スタート</button>
       <button class="btn-sub" id="btnRotate" onclick="toggleOrientation()" title="画面回転">⟳</button>
     </div>
