@@ -1,4 +1,4 @@
-const CACHE = 'pokeka-timer-v1';
+const CACHE = 'pokeka-timer-v2';
 const FILES = ['./', 'index.html', 'app.js', 'manifest.json', 'icon.svg'];
 
 self.addEventListener('install', e =>
