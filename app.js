@@ -75,7 +75,7 @@ function resetTimer() {
   if (running) pause();
   remaining = CONFIG[mode].duration;
   firedAlerts.clear();
-  document.body.className = '';
+  document.body.classList.remove('warning', 'alert', 'danger');
   document.getElementById('statusLabel').innerHTML = '&nbsp;';
   document.getElementById('modeBO1').disabled = false;
   document.getElementById('modeBO3').disabled = false;
@@ -99,7 +99,8 @@ function tick() {
       firedAlerts.add(alert.at);
       speak(alert.text);
       vibrate();
-      document.body.className = alert.state;
+      document.body.classList.remove('warning', 'alert', 'danger');
+      document.body.classList.add(alert.state);
       document.getElementById('statusLabel').textContent = alert.label;
     }
   }
