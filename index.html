@@ -256,7 +256,15 @@
     body.rotated .title         { margin-bottom: 0.6rem; }
     body.rotated .mode-selector { margin-bottom: 1rem; }
     body.rotated .mode-btn      { padding: 0.4rem 1.6rem; }
-    body.rotated .timer         { font-size: 3.8rem; margin-bottom: 0.3rem; }
+    /* 回転コンテナ内で数字が変わると古い桁が残像として残る描画バグの回避:
+       タイマーを独立した合成レイヤーに乗せ、更新時に確実に再描画させる */
+    body.rotated .timer {
+      font-size: 3.8rem;
+      margin-bottom: 0.3rem;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
     body.rotated .status-label  { margin-bottom: 1rem; }
     body.rotated .btn-main      { padding: 0.7rem 2.4rem; }
     body.rotated .btn-sub       { width: 44px; height: 44px; }
