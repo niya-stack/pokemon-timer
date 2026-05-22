@@ -116,11 +116,11 @@
     .controls {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
     }
 
     .btn-main {
-      padding: 1rem 2.8rem;
+      padding: 0.9rem 1.8rem;
       border: none;
       border-radius: 999px;
       background: #fffffe;
@@ -128,7 +128,8 @@
       font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
-      min-width: 152px;
+      min-width: 120px;
+      white-space: nowrap;
       transition: transform 0.1s;
     }
 
@@ -137,6 +138,7 @@
     .btn-sub {
       width: 52px;
       height: 52px;
+      flex-shrink: 0;
       border: 2px solid rgba(255,255,255,0.25);
       border-radius: 50%;
       background: transparent;
@@ -155,7 +157,7 @@
     }
 
     .btn-reset {
-      padding: 0.6rem 1.3rem;
+      padding: 0.55rem 1rem;
       border: 2px solid rgba(255,255,255,0.25);
       border-radius: 999px;
       background: transparent;
@@ -163,6 +165,7 @@
       font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
+      white-space: nowrap;
       transition: transform 0.1s, border-color 0.15s;
     }
 
