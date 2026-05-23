@@ -251,27 +251,50 @@
       transform-origin: center center;
     }
 
+    /* 横表示はタイマーを主役にする 2 列 Grid。
+       左列に BO 選択を縦並びで寄せ、右列にタイマー/状態/操作を縦に積む。 */
     body.rotated .container {
-      padding: 1rem 1.5rem;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "mode timer"
+        "mode status"
+        "mode controls";
+      align-items: center;
+      justify-items: center;
+      align-content: center;
+      gap: 0.4rem 1.2rem;
+      padding: 1rem 1.2rem;
     }
 
-    body.rotated .title         { margin-bottom: 0.6rem; }
-    body.rotated .mode-selector { margin-bottom: 1rem; }
-    body.rotated .mode-btn      { padding: 0.4rem 1.6rem; }
+    body.rotated .title { display: none; }
+
+    body.rotated .mode-selector {
+      grid-area: mode;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin: 0;
+      align-self: center;
+    }
+    body.rotated .mode-btn { padding: 0.4rem 1rem; font-size: 0.9rem; }
+
     /* 回転コンテナ内で数字が変わると古い桁が残像として残る描画バグの回避:
        タイマーを独立した合成レイヤーに乗せ、更新時に確実に再描画させる */
     body.rotated .timer {
-      font-size: 3.8rem;
-      margin-bottom: 0.3rem;
+      grid-area: timer;
+      font-size: clamp(5rem, 14vh, 7rem);
+      margin: 0;
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
-    body.rotated .status-label  { margin-bottom: 1rem; }
-    body.rotated .btn-main      { padding: 0.7rem 2.4rem; }
-    body.rotated .btn-sub       { width: 44px; height: 44px; }
-    body.rotated .btn-reset     { padding: 0.45rem 1rem; font-size: 0.8rem; }
+
+    body.rotated .status-label { grid-area: status; margin: 0; }
+    body.rotated .controls     { grid-area: controls; }
+    body.rotated .btn-main     { padding: 0.7rem 2.4rem; }
+    body.rotated .btn-sub      { width: 44px; height: 44px; }
+    body.rotated .btn-reset    { padding: 0.45rem 1rem; font-size: 0.8rem; }
   </style>
 </head>
 <body>
